@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Utiliser des API</title>
+
+         <!-- css -->
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+         <link href="css/style.css" rel="stylesheet">
+        </head>
+
+    <body>
+        <section id="section_1" class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-md-6">
+                        <div class="accueil-appli">
+                            <h1>Application JavaScript</h1>
+                        </div>
+                        <div class="subtitle-accueil">
+                            <p>Petites découvetes des API faites avec Ajax!</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 profile-picture">
+                            <img src="images/index.png" alt="humanBooster" class="rounded">    
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="menunavbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-inline list-menu">
+                            <li class="list-inline-item"><a href="#section_2">Définition des API</a></li>
+                            <li class="list-inline-item"><a href="#section_3">GitHub</a></li>
+                            <li class="list-inline-item"><a href="#section_4">Lexique</a></li>
+                            <li class="list-inline-item"><a href="#section_5">Météo</a></li>
+                            <li class="list-inline-item"><a href="#note">Calcul de notes</a></li>
+                            <li class="list-inline-item"><a href="#listeEleve">Tableau G13</a></li>
+                            <li class="list-inline-item"><a href="index2.html">Groupe G13</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <section_2 id="section_2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="section-title">Définition d'une API</h3>
+                        <p>En informatique, une interface de programmation applicative (souvent désignée par le terme API pour application programming interface) est un ensemble normalisé de classes, de méthodes ou de fonctions qui sert de façade par laquelle un logiciel offre des services à d'autres logiciels. Elle est offerte par une bibliothèque logicielle ou un service web, le plus souvent accompagnée d'une description qui spécifie comment des programmes consommateurs peuvent se servir des fonctionnalités du programme fournisseur.
+                                            Dans l'industrie contemporaine du logiciel, les applications informatiques se servent de nombreuses interfaces de programmation, la programmation se fait en réutilisant des briques de fonctionnalités fournies par des logiciels tiers. Cette construction par assemblage nécessite pour le programmeur de connaître la manière d’interagir avec les autres logiciels, qui dépend de leur interface de programmation. Le programmeur n'a pas besoin de connaître les détails de la logique interne du logiciel tiers, et celle-ci n'est généralement pas documentée par le fournisseur. 
+                                            Des logiciels tels que les systèmes d'exploitation, les systèmes de gestion de base de données, les langages de programmation, ou les serveurs d'applications comportent une interface de programmation. </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <section id="section_3" class="conatainer-fluid">
+            <div class="container">
+                <h3>Informations sur un profil GitHub</h3>
+                <form>
+                    <p>
+                    <input type="text" name="profil" id="profil" placeholder="Saisissez un profil GitHub" required>
+                            <input type="submit" value="Rechercher">
+                    </p>
+                </form>
+                <div id="infos"></div>
+            </div>
+         </section>
+    
+        <section id="section_4" class="container-fluid">
+            <div class="container">
+                <h3>Mini-Lexique API/AJAX</h3>
+            </div> 
+            <div class="container"> 
+                <div id="lettres"></div>
+                <div id="mots"></div>
+            </div>
+        </section>
+    
+        <section id="section_5">
+            <div id="listeMatieres" class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                    <div><strong>Quel temps fait-il à ? </strong>
+                    <input id="cityField" type="text"/>
+                    <button id="boutonweather">Demander au serveur</button>
+                    </div>
+                    <p id="reponseduserver">reponse du serveur ...</p>          
+                </div>
+                </div>
+            </div>
+                       
+            <script id="arecupererdepuislejs" type="x-tmpl-mustache">
+                          <div class="row"><div class="col-md-6">{{titre}}</div><div class="col-md-6">({{note}}/5)<div></div>
+            </script>
+                   
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js"></script>
+            <script src="script.js"></script>
+            <script>
+                $("#boutonweather").click(function () {
+                    var wantedCity = $("#cityField").val();
+                    const url = "https://www.prevision-meteo.ch/services/json/"+wantedCity;
+                    $.ajax({
+                    "url": url,
+                    "type": "GET",
+                    "success": function(data, status) {
+                    var parsedResponse = data;
+                    console.log(parsedResponse);
+                    var current_city = parsedResponse.city_info.name;
+                    var current_temp = parsedResponse.current_condition.tmp+"°C";
+                    var current_cond = parsedResponse.current_condition.condition;
+                    $("#reponseduserver").html("À "+current_city+" il fait "+current_temp+" et "+current_cond);
+                    }, error:function(error) {
+                        console.log("Error:" +error);
+                        }
+                    });
+                                             
+                });
+            </script>
+        </section>
+
+    <!--Partie notes de la formation-->
+    <section id="note" class="container-fluid">
+            <div class="container"> 
+                <div class="row">
+                    <div class="heading">
+                        <h2>Notes</h2>
+                        <legend>Total sur le CCP :                          
+                                <span id="notation"></span>
+                        </legend>
+                    </div>
+                </div>
+                <!--Langage Js-->
+                <div class="container">
+                    <div class="row">          
+                        <label>Le langage JavaScript :</label>
+                        <input type="checkbox" name="vehicle" value="1">1
+                        <input type="checkbox" name="vehicle" value="1">2
+                        <input type="checkbox" name="vehicle" value="1">3
+                        <input type="checkbox" name="vehicle" value="1">4
+                        <input type="checkbox" name="vehicle" value="1">5
+                    </div>
+                </div>
+                <!--Programmation O.O en JavaScript-->
+                <div class="container">
+                    <div class="row">          
+                        <label>Programmation O.O en JavaScript :</label>
+                        <input type="checkbox" name="vehicle" value="1">1
+                        <input type="checkbox" name="vehicle" value="1">2
+                        <input type="checkbox" name="vehicle" value="1">3
+                        <input type="checkbox" name="vehicle" value="1">4
+                        <input type="checkbox" name="vehicle" value="1">5
+                    </div>
+                </div>
+                <!--Validation en JavaScript-->
+                <div class="container">
+                    <div class="row">          
+                        <label>Validation en JavaScript :</label>
+                        <input type="checkbox" name="vehicle" value="1">1
+                        <input type="checkbox" name="vehicle" value="1">2
+                        <input type="checkbox" name="vehicle" value="1">3
+                        <input type="checkbox" name="vehicle" value="1">4
+                        <input type="checkbox" name="vehicle" value="1">5
+                    </div>
+                </div>
+                <!--Framework Jquery-->
+                <div class="container">
+                    <div class="row">          
+                        <label>Framework Jquery :</label>
+                        <input type="checkbox" name="vehicle" value="1">1
+                        <input type="checkbox" name="vehicle" value="1">2
+                        <input type="checkbox" name="vehicle" value="1">3
+                        <input type="checkbox" name="vehicle" value="1">4
+                        <input type="checkbox" name="vehicle" value="1">5
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!--Tableau de personne du groupe g13-->
+        <script id="stagiaire" type="x-tmpl-mustache">
+            <div class="row"> 
+                <div class="col-md-4">{{prenom}}</div>
+                <div class="col-md-4">{{groupe}}</div>
+            </div>
+        </script>
+        <section id="listeEleve" class="container-fluid">
+            <div class="container"></div>
+        </section>
+    
+        <!--FOOTER-->
+        <section id="footer" class="container-fluid">
+            <a href="#haut">haut de page</a>    
+        </section>
+    
+    
+        <!--SCRIPTS toujours mettre en bas et dans l'ordre de lecture-->
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js"></script>>
+
+        -
+        <script src="js/script.js"></script> 
+        <script src="js/ajax.js"></script>
+        <script src="js/github.js"></script>
+        <script src="js/cours.js"></script>
+        <script src="js/lexique.js "></script>   
+    </body>
+</html>
